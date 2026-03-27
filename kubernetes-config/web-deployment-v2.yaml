@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ labels:
+   app: events-web
+ name: events-web-v2
+spec:
+ replicas: 4
+ selector:
+   matchLabels:
+     app: events-web
+     ver: v2.0
+ template:
+   metadata:
+     labels:
+       app: events-web
+       ver: v2.0
+   spec:
+     containers:
+     - image: apacuser112/events-website:v2.0
+       name: events-web
+       ports:
+       - containerPort: 8080
+       env:
+        - name: SERVER
+          value: "http://events-api-svc:8082"
